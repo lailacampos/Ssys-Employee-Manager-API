@@ -15,9 +15,3 @@ class EmployeeGenericViewSet(
     serializer_class = EmployeeSerializer
     lookup_field = 'pk'
 
-    # def get_permissions(self):
-    #     """
-    #        Instantiates and returns the list of permissions that this view requires.
-    #     """
-    #     permission_classes = [permissions.IsAuthenticated]
-    #     return [permission() for permission in permission_classes]
