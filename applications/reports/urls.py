@@ -1,6 +1,7 @@
 from django.urls import path
-from . import views
+from applications.reports.views import ReportSalaryAPIView, ReportAgeAPIView
 
 urlpatterns = [
-    path('', views.ReportSalaryListAPIView.as_view()),
+    path('employees/salary/', ReportSalaryAPIView.as_view(), name='report-salary'),
+    path('employees/age/', ReportAgeAPIView.as_view(), name='report-age')
 ]

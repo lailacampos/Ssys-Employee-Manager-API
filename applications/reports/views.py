@@ -1,13 +1,22 @@
-from rest_framework import generics
-from applications.employees.models import Employee
-from applications.employees.serializers import EmployeeSerializer
+from rest_framework import views
+from rest_framework.response import Response
+
+from applications.employees.services import get_employee_salary_report, get_employee_age_report
+from applications.employees.serializers import EmployeeSalaryReportSerializer, EmployeeAgeReportSerializer
 
 
-class ReportSalaryListAPIView(generics.ListAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
+class ReportSalaryAPIView(views.APIView):
 
-    def list(self, request, *args, **kwargs):
-        response = super().list(request, args, kwargs)
-        response.data['']
+    def get(self, request, *args, **kwargs):
+        employee_salary_report = get_employee_salary_report()
+        serializer = EmployeeSalaryReportSerializer(employee_salary_report)
+        return Response(serializer.data)
+
+
+class ReportAgeAPIView(views.APIView):
+
+    def get(self, request, *args, **kwargs):
+        employee_age_report = get_employee_age_report()
+        serializer = EmployeeAgeReportSerializer(employee_age_report)
+        return Response(serializer.data)
 

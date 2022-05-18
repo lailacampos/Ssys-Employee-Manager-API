@@ -1,29 +1,23 @@
-from rest_framework import generics
-
+from rest_framework import mixins, viewsets, permissions
 from .models import Employee
 from .serializers import EmployeeSerializer
 
 
-class EmployeeDetailAPIView(generics.RetrieveAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
-
-
-class EmployeeListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
-
-
-class EmployeeUpdateAPIView(generics.UpdateAPIView):
+class EmployeeGenericViewSet(
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    viewsets.GenericViewSet
+):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
     lookup_field = 'pk'
 
-
-class EmployeeDeleteAPIView(generics.DestroyAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
-    lookup_field = 'pk'
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
+    # def get_permissions(self):
+    #     """
+    #        Instantiates and returns the list of permissions that this view requires.
+    #     """
+    #     permission_classes = [permissions.IsAuthenticated]
+    #     return [permission() for permission in permission_classes]
